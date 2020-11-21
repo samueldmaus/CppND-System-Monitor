@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "linux_parser.h"
 #include "process.h"
 #include "processor.h"
 #include "system.h"
@@ -26,7 +27,10 @@ std::string System::Kernel() { return string(); }
 float System::MemoryUtilization() { return 0.0; }
 
 // TODO: Return the operating system name
-std::string System::OperatingSystem() { return string(); }
+std::string System::OperatingSystem() {
+    System::os = LinuxParser::OperatingSystem();
+    return System::os;
+}
 
 // TODO: Return the number of processes actively running on the system
 int System::RunningProcesses() { return 0; }
