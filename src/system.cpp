@@ -39,7 +39,10 @@ std::string System::OperatingSystem() {
 int System::RunningProcesses() { return 0; }
 
 // TODO: Return the total number of processes on the system
-int System::TotalProcesses() { return 0; }
+int System::TotalProcesses() {
+    System::total_processes = LinuxParser::TotalProcesses();
+    return System::total_processes;
+}
 
 // TODO: Return the number of seconds since the system started running
 long int System::UpTime() { return 0; }
