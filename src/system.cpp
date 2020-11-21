@@ -36,7 +36,10 @@ std::string System::OperatingSystem() {
 }
 
 // TODO: Return the number of processes actively running on the system
-int System::RunningProcesses() { return 0; }
+int System::RunningProcesses() {
+    System::running_processes = LinuxParser::RunningProcesses();
+    return running_processes;
+}
 
 // TODO: Return the total number of processes on the system
 int System::TotalProcesses() {

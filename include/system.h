@@ -20,6 +20,7 @@ class System {
 
   // TODO: Define any necessary private members
  private:
+  int running_processes;
   int total_processes;
   std::string kernel;
   std::string os;
