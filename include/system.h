@@ -20,6 +20,7 @@ class System {
 
   // TODO: Define any necessary private members
  private:
+  long uptime;
   float memory;
   int running_processes;
   int total_processes;
