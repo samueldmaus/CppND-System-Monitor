@@ -70,7 +70,7 @@ vector<int> LinuxParser::Pids() {
 // TODO: Read and return the system memory utilization
 float LinuxParser::MemoryUtilization() {
   string line, key;
-  float value, value_total, value_free, value_buffer;
+  float value, value_total, value_free;
   std::ifstream stream(kProcDirectory + kMeminfoFilename);
   if(stream.is_open()) {
     while(std::getline(stream, line)) {
@@ -81,13 +81,11 @@ float LinuxParser::MemoryUtilization() {
           value_total = value;
         } else if (key == "MemFree") {
           value_free = value;
-        } else if(key == "Buffers") {
-          value_buffer = value;
         }
       }
     }
   }
-  return 1.0 - (value_free / (value_total - value_buffer));
+  return (value_total - value_free)/value_total;
 }
 
 // TODO: Read and return the system uptime
@@ -197,11 +195,42 @@ string LinuxParser::Ram(int pid[[maybe_unused]]) { return string(); }
 
 // TODO: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Uid(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::Uid(int pid) {
+  string line, key, value;
+  std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatusFilename);
+  if (stream.is_open()) {
+    while(std::getline(stream, line)) {
+      std::replace(line.begin(), line.end(), ':', ' ');
+      std::istringstream linestream(line);
+      while (linestream >> key >> value) {
+        if (key == "Uid") {
+          return value;
+        }
+      }
+    }
+  }
+  return string();
+}
 
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::User(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::User(int pid) {
+  string line, key, value_one, value_two;
+  string user_num = LinuxParser::Uid(pid);
+  std::ifstream stream(kPasswordPath);
+  if (stream.is_open()) {
+    while(std::getline(stream, line)) {
+      std::replace(line.begin(), line.end(), ':', ' ');
+      std::istringstream linestream(line);
+      while (linestream >> key >> value_one >> value_two) {
+        if (value_two == "1000") {
+          return key;
+        }
+      }
+    }
+  }
+  return string();
+}
 
 // TODO: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
