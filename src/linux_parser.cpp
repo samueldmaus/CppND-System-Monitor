@@ -9,6 +9,7 @@ using std::stof;
 using std::string;
 using std::to_string;
 using std::vector;
+using std::stol;
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
@@ -113,14 +114,41 @@ long LinuxParser::Jiffies() {
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
 // TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
+long LinuxParser::ActiveJiffies() {
+  long active_jiffies;
+  vector<string> cpu_util = LinuxParser::CpuUtilization();
+  active_jiffies = stol(cpu_util[0]) + stol(cpu_util[1]) + stol(cpu_util[2]) + stol(cpu_util[5])
+  + stol(cpu_util[6]) + stol(cpu_util[7]);
+  return active_jiffies;
+}
 
 // TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { return 0; }
+long LinuxParser::IdleJiffies() {
+  long idle_jiffies;
+  vector<string> cpu_util = LinuxParser::CpuUtilization();
+  idle_jiffies = stol(cpu_util[3]) + stol(cpu_util[4]);
+  return idle_jiffies;
+}
 
 // TODO: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() {
-
+  string line, key;
+  vector<string> cpu_util;
+  std::ifstream stream(kProcDirectory + kStatFilename);
+  if (stream.is_open()) {
+    while(std::getline(stream, line)) {
+      std::istringstream linestream(line);
+      while(linestream >> key) {
+        if(key == "cpu") {
+          while(linestream >> key){
+            cpu_util.push_back(key);
+          }
+          return cpu_util;
+        }
+      }
+    }
+  }
+  return {};
 }
 
 // TODO: Read and return the total number of processes
