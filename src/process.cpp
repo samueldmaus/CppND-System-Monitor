@@ -23,8 +23,8 @@ float Process::CpuUtilization() {
     total_time += std::stof(cpu_util[2]) + std::stof(cpu_util[3]);
     long up_time = LinuxParser::UpTime();
     int seconds = up_time - (std::stoi(cpu_util[4]) / sysconf(_SC_CLK_TCK));
-    float cpu_usage = (total_time / sysconf(_SC_CLK_TCK)) / seconds;
-    return cpu_usage;
+    Process::cpu_usage_ = (total_time / sysconf(_SC_CLK_TCK)) / seconds;
+    return cpu_usage_ * 100;
 }
 
 // TODO: Return the command that generated this process
@@ -35,8 +35,8 @@ string Process::Command() {
 // TODO: Return this process's memory utilization
 string Process::Ram() {
     string ram_kb = LinuxParser::Ram(pid_);
-    Process::ram_mb = std::stoi(ram_kb)/1000;
-    return to_string(Process::ram_mb);
+    Process::ram_mb_ = std::stoi(ram_kb)/1000;
+    return to_string(Process::ram_mb_);
 }
 
 // TODO: Return the user (name) that generated this process
@@ -54,7 +54,10 @@ long int Process::UpTime() {
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const {
     // logic for sorting by ram
+    /*
     int ram_a = this->ram_mb;
     int ram_b = a.ram_mb;
     return ram_a > ram_b;
+    */
+   return cpu_usage_ > a.cpu_usage_;
 }
