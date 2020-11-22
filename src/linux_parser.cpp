@@ -149,6 +149,38 @@ vector<string> LinuxParser::CpuUtilization() {
   return {};
 }
 
+// return cpu utilization for each process - 13, 14, 15, 16, 21
+vector<string> LinuxParser::CpuUtilization(int pid) {
+  string value, utime, stime, cutime, cstime, starttime;
+  vector<string> cpu_util;
+  std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatFilename);
+  if (stream.is_open()) {
+    for (int i = 0; i < 22; i++) {
+      switch (i)
+      {
+        case 13:
+          stream >> utime;
+          cpu_util.push_back(utime);
+        case 14:
+          stream >> stime;
+          cpu_util.push_back(stime);
+        case 15:
+          stream >> cutime;
+          cpu_util.push_back(cutime);
+        case 16:
+          stream >> cstime;
+          cpu_util.push_back(cstime);
+        case 21:
+          stream >> starttime;
+          cpu_util.push_back(starttime);
+        default:
+          stream >> value;
+      }
+    }
+    return cpu_util;
+  }
+}
+
 // TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() {
   string line, key;

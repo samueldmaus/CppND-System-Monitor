@@ -17,7 +17,15 @@ int Process::Pid() {
 }
 
 // TODO: Return this process's CPU utilization
-float Process::CpuUtilization() { return 0; }
+float Process::CpuUtilization() {
+    vector<string> cpu_util = LinuxParser::CpuUtilization(pid_);
+    float total_time = std::stof(cpu_util[0]) + std::stof(cpu_util[1]);
+    total_time += std::stof(cpu_util[2]) + std::stof(cpu_util[3]);
+    long up_time = LinuxParser::UpTime();
+    int seconds = up_time - (std::stoi(cpu_util[4]) / sysconf(_SC_CLK_TCK));
+    float cpu_usage = (total_time / sysconf(_SC_CLK_TCK)) / seconds;
+    return cpu_usage;
+}
 
 // TODO: Return the command that generated this process
 string Process::Command() {
