@@ -45,5 +45,8 @@ long int Process::UpTime() {
 // TODO: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const {
-    return Process::ram_mb > a.ram_mb;
+    // logic for sorting by ram
+    int ram_a = this->ram_mb;
+    int ram_b = a.ram_mb;
+    return ram_a > ram_b;
 }

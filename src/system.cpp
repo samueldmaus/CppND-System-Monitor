@@ -3,6 +3,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "linux_parser.h"
 #include "process.h"
@@ -23,7 +24,8 @@ vector<Process>& System::Processes() {
         Process process(pid);
         processes_.emplace_back(process);
     }
-    
+    // std::sort(processes_.begin(), processes_.end(), function for sorting);
+    std::sort(processes_.begin(), processes_.end());
     return processes_;
 }
 
