@@ -24,7 +24,7 @@ float Process::CpuUtilization() {
     long up_time = LinuxParser::UpTime();
     int seconds = up_time - (std::stoi(cpu_util[4]) / sysconf(_SC_CLK_TCK));
     Process::cpu_usage_ = (total_time / sysconf(_SC_CLK_TCK)) / seconds;
-    return cpu_usage_ * 100;
+    return cpu_usage_;
 }
 
 // TODO: Return the command that generated this process
