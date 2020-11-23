@@ -33,10 +33,10 @@ string Process::Command() {
 }
 
 // TODO: Return this process's memory utilization
-string Process::Ram() {
-    string ram_kb = LinuxParser::Ram(pid_);
-    Process::ram_mb_ = std::stoi(ram_kb)/1000;
-    return to_string(Process::ram_mb_);
+int Process::Ram() {
+    int ram_kb = LinuxParser::Ram(pid_);
+    Process::ram_mb_ = ram_kb/1000;
+    return Process::ram_mb_;
 }
 
 // TODO: Return the user (name) that generated this process
