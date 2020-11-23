@@ -33,9 +33,13 @@ string Process::Command() {
 }
 
 // TODO: Return this process's memory utilization
-int Process::Ram() {
-    int ram_kb = LinuxParser::Ram(pid_);
-    Process::ram_mb_ = ram_kb/1000;
+std::string Process::Ram() {
+    int int_ram_kb;
+    std::string ram_kb = LinuxParser::Ram(pid_);
+    if (ram_kb != "") {
+        int_ram_kb = (std::stoi(ram_kb))/1000;
+    }
+    Process::ram_mb_ = to_string(int_ram_kb);
     return Process::ram_mb_;
 }
 
