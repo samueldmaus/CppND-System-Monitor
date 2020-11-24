@@ -3,7 +3,7 @@
 ## Description
 This is a Linux System Monitor program based off of the popolar htop program. 
 
-![System Monitor](images/monitor.png)
+![System Monitor](images/capture_monitor.png)
 
 ## ncurses
 [ncurses](https://www.gnu.org/software/ncurses/) is a library that facilitates text-based graphical output in the terminal. This project relies on ncurses for display output.
@@ -28,3 +28,4 @@ This project uses [Make](https://www.gnu.org/software/make/). The Makefile has f
 3. Run the resulting executable: `./build/monitor`
 
 4. If changes are made, simply build the project again using `make build` again. 
+
