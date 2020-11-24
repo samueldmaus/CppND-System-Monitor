@@ -228,7 +228,7 @@ string LinuxParser::Command(int pid) {
 }
 
 // TODO: Read and return the memory used by a process
-// REMOVE: [[maybe_unused]] once you define the function
+// using VmData to get physical RAM data
 std::string LinuxParser::Ram(int pid) {
   string line, key, value;
   std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatusFilename);
@@ -237,13 +237,13 @@ std::string LinuxParser::Ram(int pid) {
       std::replace(line.begin(), line.end(), ':', ' ');
       std::istringstream linestream(line);
       while (linestream >> key >> value) {
-        if(key == "VmSize") {
+        if(key == "VmData") {
           return value;
         }
       }
     }
   }
-  return int();
+  return string();
 }
 
 // TODO: Read and return the user ID associated with a process

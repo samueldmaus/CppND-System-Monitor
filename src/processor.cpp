@@ -4,7 +4,7 @@
 
 
 // TODO: Return the aggregate CPU utilization
-float Processor::Utilization() {
-    Processor::cpu_usage_1 = (float) (LinuxParser::ActiveJiffies()/sysconf(_SC_CLK_TCK))/LinuxParser::UpTime();
+double Processor::Utilization() {
+    Processor::cpu_usage_1 = static_cast<double>(LinuxParser::ActiveJiffies()/sysconf(_SC_CLK_TCK))/LinuxParser::UpTime();
     return Processor::cpu_usage_1;
 }
