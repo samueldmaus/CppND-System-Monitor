@@ -20,6 +20,7 @@ Processor& System::Cpu() { return cpu_; }
 
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
+    processes_.clear();
     for(int pid: LinuxParser::Pids()){
         Process process(pid);
         processes_.emplace_back(process);

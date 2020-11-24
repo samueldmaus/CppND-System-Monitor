@@ -6,6 +6,7 @@
 
 #include "process.h"
 #include "linux_parser.h"
+#include "system.h"
 
 using std::string;
 using std::to_string;
@@ -51,7 +52,9 @@ string Process::User() {
 
 // TODO: Return the age of this process (in seconds)
 long int Process::UpTime() {
-    return LinuxParser::UpTime(pid_);
+    Process::up_time = LinuxParser::UpTime(pid_);
+    long int total_time = LinuxParser::UpTime();
+    return total_time - Process::up_time;
 }
 
 // TODO: Overload the "less than" comparison operator for Process objects
@@ -63,5 +66,5 @@ bool Process::operator<(Process const& a) const {
     int ram_b = a.ram_mb;
     return ram_a > ram_b;
     */
-   return cpu_usage_ > a.cpu_usage_;
+   return a.cpu_usage_ < cpu_usage_;
 }

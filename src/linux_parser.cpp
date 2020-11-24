@@ -109,7 +109,7 @@ long LinuxParser::Jiffies() {
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
+// long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
 // TODO: Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
@@ -161,24 +161,30 @@ vector<string> LinuxParser::CpuUtilization(int pid) {
         case 13:
           stream >> utime;
           cpu_util.push_back(utime);
+          break;
         case 14:
           stream >> stime;
           cpu_util.push_back(stime);
+          break;
         case 15:
           stream >> cutime;
           cpu_util.push_back(cutime);
+          break;
         case 16:
           stream >> cstime;
           cpu_util.push_back(cstime);
+          break;
         case 21:
           stream >> starttime;
           cpu_util.push_back(starttime);
+          break;
         default:
           stream >> value;
+          break;
       }
     }
-    return cpu_util;
   }
+  return cpu_util;
 }
 
 // TODO: Read and return the total number of processes
@@ -291,7 +297,7 @@ string LinuxParser::User(int pid) {
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::UpTime(int pid) {
   string value;
-  long time;
+  long int time;
   std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatFilename);
   if (stream.is_open()) {
     for (int i = 0; i < 22; i++) {
