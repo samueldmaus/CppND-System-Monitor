@@ -3,7 +3,7 @@
 ## Description
 This is a Linux System Monitor program based off of the popolar htop program. 
 
-![System Monitor](images/capture_monitor.png)
+![System Monitor](images/capture_monitor.PNG)
 
 ## ncurses
 [ncurses](https://www.gnu.org/software/ncurses/) is a library that facilitates text-based graphical output in the terminal. This project relies on ncurses for display output.
