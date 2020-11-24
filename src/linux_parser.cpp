@@ -243,7 +243,7 @@ std::string LinuxParser::Ram(int pid) {
       }
     }
   }
-  return string();
+  return string{};
 }
 
 // TODO: Read and return the user ID associated with a process
@@ -262,7 +262,7 @@ string LinuxParser::Uid(int pid) {
       }
     }
   }
-  return string();
+  return string{};
 }
 
 // TODO: Read and return the user associated with a process
@@ -282,7 +282,7 @@ string LinuxParser::User(int pid) {
       }
     }
   }
-  return string();
+  return string{};
 }
 
 // TODO: Read and return the uptime of a process

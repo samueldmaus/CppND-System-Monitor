@@ -36,7 +36,7 @@ string Process::Command() {
     } else {
         return Process::command_line;
     }
-    return string();
+    return string{};
 }
 
 // TODO: Return this process's memory utilization
